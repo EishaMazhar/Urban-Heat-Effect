@@ -98,7 +98,6 @@ st.pyplot(fig)
 # Word cloud for descriptive columns
 
 
-
 def generate_wordcloud(text):
     stopwords = set(STOPWORDS)
     stopwords.update(['areas', 'description', 'describe', 'people', 'evenly'])
@@ -112,11 +111,15 @@ def generate_wordcloud(text):
     plt.show()
 
 
+wordcloud_columns = ['describe_greenery', 'describe_why_cooler', 'describe_indoor_cooling_methods', 'describe_indoor_improvements', 'describe_outdoor_improvements', 'describe_health_effect',
+                     'describe_routine_alteration', 'describe_recovery_measures']
+selected_word_cloud = st.selectbox(
+    "Select Word Cloud", options=wordcloud_columns)
 # Combine all descriptions into a single string
-st.subheader("Word Cloud for Greenery Descriptions")
+st.subheader(f"Word Cloud for {selected_word_cloud}")
 
 combined_text = ' '.join(
-    filtered_data['describe_greenery'].dropna().astype(str))
+    filtered_data[selected_word_cloud].dropna().astype(str))
 generate_wordcloud(combined_text)
 st.pyplot()
 

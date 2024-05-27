@@ -31,6 +31,6 @@ COLUMN_NAMES_MAP = {
     "Do you think bus stops/public waiting areas have sufficient shaded area?": "public_stop_shades",
     "Have you or anyone you know suffered from a case of extreme heat related health issue specifically in the area you have reported?": "is_health_effected",
     "What are the effects of the extreme heat cases on that person(s)?": "describe_health_effect",
-    "What were the measures taken to recover from such health effects from the extreme heat?": "Health_recovery_measures",
+    "What were the measures taken to recover from such health effects from the extreme heat?": "describe_recovery_measures",
     "Would you consider consulting a forum/chatbot to help you and community to combat heat and strategically plan for it through experiences of others?": "need_chatbot",
     "Would you like to Add any comments related to Urban heat mitigation planning in your Area specifically by Government other institutes or on personal level.": "final_comment"}
