@@ -25,7 +25,7 @@ df = df.rename(columns=COLUMN_NAMES_MAP)
 # Display the first few rows of the DataFrame
 st.title("Urban Heat Island Effect Mitigation Strategies")
 st.write("Our platform aims to provide a comprehensive overview of the Urban Heat Island Effect and the various strategies that can be implemented to mitigate it. The data presented here is collected through crowdsourcing and is open to contributions from the public in India & Pakistan. If you have any information that you would like to share, please feel free to reach out to us.")
-st.write(df.head())
+st.write(df.head(10))
 
 # Bar plot for country counts
 st.subheader("Number of Responses by Country")
@@ -33,6 +33,14 @@ country_counts = df.groupby('country').size()
 country_counts.plot(kind='barh', color=sns.color_palette('Dark2'))
 plt.gca().spines[['top', 'right']].set_visible(False)
 st.pyplot()
+
+
+st.subheader("Hot and cool hours of the day")
+st.image("india_times.jpeg", caption='Hottest hours of the day',
+         use_column_width=True)
+st.image("pakistan_times.jpeg",
+         caption='Hottest hours of the day', use_column_width=True)
+
 
 # Sidebar for selecting country and city
 st.sidebar.title("Filters")
@@ -116,7 +124,6 @@ def generate_wordcloud(text):
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis('off')
     plt.show()
-
 
 
 # wordcloud select box
