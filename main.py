@@ -70,30 +70,37 @@ axs[2].set_ylabel('Count')
 plt.tight_layout()
 st.pyplot(fig)
 
-# Radar chart for a specific field
-# st.subheader("Radar Chart for Residential Ratings")
-# selected_field = 'rate_residential'
-# radar_data = df.groupby('city')[selected_field].mean().reset_index()
+# Radar chart for months reported
+st.subheader("Radar Chart for Reported Months")
 
-# fig = go.Figure()
+# Process the month data
+all_months = ['January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December']
+month_counts = {month: 0 for month in all_months}
 
-# fig.add_trace(go.Scatterpolar(
-#     r=radar_data[selected_field].values,
-#     theta=radar_data['city'].values,
-#     fill='toself',
-#     name=selected_field
-# ))
+for months in filtered_data['reported_months'].dropna():
+    for month in months.split(', '):
+        month_counts[month] += 1
 
-# fig.update_layout(
-#     polar=dict(
-#         radialaxis=dict(
-#             visible=True,
-#             range=[0, 10]
-#         )),
-#     showlegend=False
-# )
+fig = go.Figure()
 
-# st.plotly_chart(fig)
+fig.add_trace(go.Scatterpolar(
+    r=list(month_counts.values()),
+    theta=list(month_counts.keys()),
+    fill='toself',
+    name='Reported Months'
+))
+
+fig.update_layout(
+    polar=dict(
+        radialaxis=dict(
+            visible=True,
+            range=[0, max(month_counts.values())]
+        )),
+    showlegend=False
+)
+
+st.plotly_chart(fig)
 
 # Word cloud for descriptive columns
 
@@ -111,17 +118,24 @@ def generate_wordcloud(text):
     plt.show()
 
 
+
+# wordcloud select box
 wordcloud_columns = ['describe_greenery', 'describe_why_cooler', 'describe_indoor_cooling_methods', 'describe_indoor_improvements', 'describe_outdoor_improvements', 'describe_health_effect',
                      'describe_routine_alteration', 'describe_recovery_measures']
 selected_word_cloud = st.selectbox(
     "Select Word Cloud", options=wordcloud_columns)
-# Combine all descriptions into a single string
+
 st.subheader(f"Word Cloud for {selected_word_cloud}")
 
+# Combine all descriptions into a single string
 combined_text = ' '.join(
     filtered_data[selected_word_cloud].dropna().astype(str))
 generate_wordcloud(combined_text)
 st.pyplot()
 
+# Detailed area description
+st.subheader("List of Reported Areas")
+for idx, row in filtered_data.iterrows():
+    st.write(f"{row['area']} (Zipcode: {row['zipcode']})")
 
 # Note: No need for `st.run()`
